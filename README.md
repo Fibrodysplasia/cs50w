@@ -38,4 +38,4 @@ Complete the implementation of your Wiki encyclopedia. You must fulfill the foll
     * The user should be able to click a button to save the changes made to the entry.
 Once the entry is saved, the user should be redirected back to that entry’s page.
 6. [**Random Page:**](https://github.com/Fibrodysplasia/cs50w/blob/main/wiki/encyclopedia/views.py) Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
-    * Markdown to HTML Conversion: On each entry’s page, any Markdown content in the entry file should be converted to HTML before being displayed to the user. You may use the python-markdown2 package to perform this conversion, installable via pip3 install markdown2.
+7. **Markdown to HTML Conversion:** On each entry’s page, any Markdown content in the entry file should be converted to HTML before being displayed to the user. You may use the python-markdown2 package to perform this conversion, installable via pip3 install markdown2.
