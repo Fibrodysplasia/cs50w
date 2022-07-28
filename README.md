@@ -3,7 +3,7 @@
 ### Completed Projects:
 Click a link to be taken to ReadMe section. Click the Title in the section to be taken to the relevant repo
 
-1. [Wiki](https://github.com/Fibrodysplasia/cs50w/edit/main/README.md#wiki)
+1. [Wiki](https://github.com/Fibrodysplasia/cs50w#wiki)
 
 ***
 
