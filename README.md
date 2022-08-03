@@ -4,11 +4,12 @@
 Click a link to be taken to ReadMe section. Click the Title in the section to be taken to the relevant file in the repo
 
 1. [Wiki](https://github.com/Fibrodysplasia/cs50w#wiki)
+2. [Commerce](https://github.com/Fibrodysplasia/cs50w#commerce) (In Progress)
 
 ***
 
 ## Wiki 
-[Click Here](https://github.com/Fibrodysplasia/cs50w/tree/main/wiki) for the repo.
+[Click Here](https://github.com/Fibrodysplasia/cs50w/tree/main/wiki) for the folder.
 
 
 [Click Here](https://github.com/Fibrodysplasia/cs50w/blob/main/wiki/encyclopedia/urls.py) for views.py
@@ -39,3 +40,17 @@ Complete the implementation of your Wiki encyclopedia. You must fulfill the foll
 Once the entry is saved, the user should be redirected back to that entry’s page.
 6. [**Random Page:**](https://github.com/Fibrodysplasia/cs50w/blob/main/wiki/encyclopedia/views.py) Clicking “Random Page” in the sidebar should take user to a random encyclopedia entry.
 7. **Markdown to HTML Conversion:** On each entry’s page, any Markdown content in the entry file should be converted to HTML before being displayed to the user. You may use the python-markdown2 package to perform this conversion, installable via pip3 install markdown2.
+
+***
+
+## Commerce 
+[Click Here](https://github.com/Fibrodysplasia/cs50w/tree/main/commerce) for the folder.
+
+[Click Here](https://github.com/Fibrodysplasia/cs50w/blob/main/commerce/auctions/views.py) for views.py
+
+
+
+### Specification
+Complete the implementation of your auction site. You must fulfill the following requirements:
+
+1. [**Models:**](https://github.com/Fibrodysplasia/cs50w/blob/main/commerce/auctions/models.py) Your application should have at least three models in addition to the User model: one for auction listings, one for bids, and one for comments made on auction listings. It’s up to you to decide what fields each model should have, and what the types of those fields should be. You may have additional models if you would like.
