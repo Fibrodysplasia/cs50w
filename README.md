@@ -1,7 +1,7 @@
 ## [Harvard's cs50w: Web Programming with Python and JavaScript](https://cs50.harvard.edu/web/2020/)
 
 ### Completed Projects:
-Click a link to be taken to ReadMe section. Click the Title in the section to be taken to the relevant file in the repo
+Click a link to be taken to ReadMe section. Click the links in the sections to be taken to the relevant file in the repo.
 
 1. [Wiki](https://github.com/Fibrodysplasia/cs50w#wiki)
 2. [Commerce](https://github.com/Fibrodysplasia/cs50w#commerce) (In Progress)
