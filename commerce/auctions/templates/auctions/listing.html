@@ -1,0 +1,55 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div style="outline: 2px dashed blue; display:flex; justify-content:space-between;">
+        <div>
+            <h1>{{ title }}</h1>
+            <p>Listed by: {{ seller }}</p>
+            <img src="{{ image_link }}" alt="Listing Image" style="height:100px; width:100px;">
+            <p>{{ description }}</p>
+            <p>Starting Bid: {{ start_bid }}</p>
+            <p>Current Bid: {{ current_bid }}</p>
+            <p>Auction Ends: {{ end_date }}</p>
+        </div>
+        <div>
+            <div style="display:flex; flex-direction:column">
+                <div>
+                    <h2>Comments</h2>
+                    {% for comment in comments %}
+                        <p><strong>{{ comment.user }}: </strong>{{ comment.content }}</p>
+                    {% empty %}
+                        <p>No comments yet</p>
+                    {% endfor %}
+                </div>
+                <div>
+                    <form action="{% url 'comment' listing_id %}" method="post">
+                        {% csrf_token %}
+                        <label for="comment">Comment:</label>
+                        <input type="text" name="comment" id="comment">
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="display:flex; flex-direction:column">
+                <div>
+                    <h2>Bid on this Listing:</h1>
+                    <form action="{% url 'bid' listing_id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="number" name="amount" placeholder="Enter your bid">
+                        <input type="submit" value="Bid">
+                    </form>
+                </div>
+                <div>
+                    <h2>Bids</h2>
+                    {% for bid in bids %}
+                        <p><strong>{{ bid.bidder }}: </strong>{{ bid.amount }}</p>
+                    {% empty %}
+                        <p>No bids yet</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
