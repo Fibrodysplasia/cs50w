@@ -1,19 +1,26 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h1 style="text-align:center;">Active Listings</h1>
+    {% if message %}
+        <div>
+            {{ message }}
+        </div>
+    {% endif %}
+    <h1 style="text-align:center;">Closed Listings</h1>
     <hr>
-    <div style="display:flex; flex-wrap:wrap; align-items:center; ">
+    <div style="display:flex; align-items:center;">
         {% for listing in listings %}
-            {% if listing.is_active %}
+            {% comment %} I could also filter is_active in the views.py {% endcomment %}
+            {% if listing.is_active == False %}
                 <div style="margin:2rem; outline: 2px solid; border-radius:25px; 
                         box-shadow: 5px 10px 18px #888888; padding:15px; width:40vw">
                     <div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
                         <h3>
                             <a href="{% url 'listing' listing.id %}">
-                                {{ listing.title }}
+                                <p><strong>SOLD: </strong>{{ listing.title }}
                             </a>
                         </h3>
+                        <p>Won by {{ listing.winner }}</p>
                         <img src="{{ listing.image_link }}" alt="Listing Image" style="height:100px; width:100px;">
                     </div>
                     <hr style="border-top:1px dotted black;">

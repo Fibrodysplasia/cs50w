@@ -11,7 +11,20 @@ from .models import *
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "listings": Listing.objects.all()
+        "listings": Listing.objects.all(),
+        "user": request.user,
+        "watched": Listing.objects.filter(watched_by=request.user)
+    })
+
+# I might be able to just redirect to index again
+# and filter the listings by is_active depending on
+# the requested view. Not sure if I should have two pages idk.
+# Seems redundant.
+def ended(request):
+    return render(request, "auctions/ended.html", {
+        "listings": Listing.objects.all(),
+        "user": request.user,
+        "watched": Listing.objects.filter(watched_by=request.user)
     })
 
 
@@ -69,6 +82,7 @@ def register(request):
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
     categories = Category.objects.filter(listings=listing)
+    current_user = request.user
     return render(request, "auctions/listing.html", {
         "title": listing.title,
         "description": listing.description,
@@ -79,6 +93,7 @@ def listing(request, listing_id):
         "end_date": listing.end_date,
         "image_link": listing.image_link,
         "seller": listing.seller,
+        "current_user": current_user,
         
         # there has to be a better way to do this
         "comments": reversed(Comment.objects.filter(listing=listing_id)[::-1][:3]),
@@ -86,6 +101,8 @@ def listing(request, listing_id):
         "categories": categories,
         "listing_id": listing_id,
         "is_active": listing.is_active,
+        "leader": listing.leader,
+        "winner": listing.winner,
     })
 
 # Default url for login_required is "/accounts/login/"
@@ -105,11 +122,31 @@ def new_listing(request):
         end_date = request.POST["end_date"]
         image_link = request.POST["image_link"]
         seller = request.user
-        listing = Listing(title=title, description=description, start_bid=start_bid, current_bid=start_bid, buy_now=buy_now, end_date=end_date, image_link=image_link, seller=seller)
+        listing = Listing(title=title, description=description, start_bid=start_bid, current_bid=0, buy_now=buy_now, end_date=end_date, image_link=image_link, seller=seller)
         listing.save()
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/new_listing.html")
+
+@login_required    
+def close(request, listing_id):
+    if request.method == "POST":
+        if request.user == Listing.objects.get(pk=listing_id).seller:
+            listing = Listing.objects.get(pk=listing_id)
+            leader = listing.leader
+            if listing.current_bid <= listing.buy_now and listing.current_bid != 0:
+                listing.winner = leader
+                listing.is_active = False
+                listing.save()
+                return HttpResponseRedirect(reverse("index"))
+            else:
+                listing.is_active = False
+                listing.save()
+                return HttpResponseRedirect(reverse("index"))
+        else:
+            messages.error(request, "You do not have permission to close this listing.")
+    else:
+        return HttpResponseRedirect(reverse("index"))
     
 def categories(request):
     return render(request, "auctions/categories.html", {
@@ -179,14 +216,17 @@ def bid(request, listing_id):
             listing.current_bid = amount
             listing.watched_by.add(bidder)
             listing.is_active = False
+            listing.winner = bidder
+            listing.leader = bidder
             listing.save()
             messages.success(request, "You have won the auction!")
             return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
         elif amount > current and amount < buyout:
             bid.save()
             listing.current_bid = amount
-            listing.save()
             listing.watched_by.add(bidder)
+            listing.leader = bidder
+            listing.save()
             messages.success(request, "Bid successful!")
             return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
         else:
@@ -211,6 +251,7 @@ def watch(request, listing_id):
     if request.method == "POST":
         user = request.user
         listing.watched_by.add(user)
+        listing.save()
         return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
     
 @login_required
@@ -219,7 +260,8 @@ def unwatch(request, listing_id):
     if request.method == "POST":
         user = request.user
         listing.watched_by.remove(user)
-        return HttpResponseRedirect(reverse("watchlist"))
+        listing.save()
+        return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
     
 @login_required
 def watchlist(request):

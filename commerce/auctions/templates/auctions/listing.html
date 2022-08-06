@@ -5,8 +5,17 @@
         <div style="margin-right:3rem;">
             {% if is_active %}
                 <h1>{{ title }}</h1>
+                {% if current_user == seller %}
+                    <form action="{% url 'close' listing_id %}" method="post" style="margin-top:20px;">
+                        {% csrf_token %}
+                        <button class="btn btn-warning" type="submit">
+                            Close Listing
+                        </button>
+                    </form>
+                {% endif %}
             {% else %}
                 <h1><strong>SOLD</strong> {{ title }}</h1>
+                <p>Won by {{ winner }}</p>
             {% endif %}
             <p>Listed by: {{ seller }}</p>
             <img src="{{ image_link }}" alt="Listing Image" style="height:100px; width:100px;">
@@ -37,13 +46,25 @@
                         </div>
                     </div>
                 </form>
-                <form action="{% url 'watch' listing_id %}" method="post" style="margin-top:20px;">
-                    {% csrf_token %}
-                    <button class="btn btn-outline-primary"
-                            type="submit">
-                        Add to Watchlist
-                    </button>
-                </form>
+                {% if user in watched_by %}
+                    <form action="/watchlist/{{ listing_id }}/unwatch" method="post" style="margin-top:20px;">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger"
+                                type="submit">
+                            Unwatch
+                        </button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'watch' listing_id %}" method="post" style="margin-top:20px;">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">
+                            Add to Watchlist
+                        </button>
+                    </form>
+                {% endif %}
+                {% if leader %}
+                    <p>{{ leader }} is currently the leading bidder.</p> 
+                {% endif %}
                 <h4>Prior Bids:</h4>
                 {% for bid in bids %}
                     <p>{{ bid.bidder }} bid {{ bid.amount }}</p>
