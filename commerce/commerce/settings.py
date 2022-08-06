@@ -87,6 +87,9 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'auctions.User'
 
+# Change default login path to match my urls for @login_required
+LOGIN_URL='/login'
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
