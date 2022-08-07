@@ -4,7 +4,7 @@
 Click a link to be taken to ReadMe section. Click the links in the sections to be taken to the relevant file in the repo.
 
 1. [Wiki](https://github.com/Fibrodysplasia/cs50w#wiki)
-2. [Commerce](https://github.com/Fibrodysplasia/cs50w#commerce) (In Progress)
+2. [Commerce](https://github.com/Fibrodysplasia/cs50w#commerce)
 
 ***
 
