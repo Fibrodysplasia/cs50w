@@ -12,7 +12,7 @@ Click a link to be taken to ReadMe section. Click the links in the sections to b
 [Click Here](https://github.com/Fibrodysplasia/cs50w/tree/main/wiki) for the folder.
 
 
-[Click Here](https://github.com/Fibrodysplasia/cs50w/blob/main/wiki/encyclopedia/urls.py) for views.py
+[Click Here](https://github.com/Fibrodysplasia/cs50w/blob/main/wiki/encyclopedia/views.py) for views.py
 
 
 ### Specification
